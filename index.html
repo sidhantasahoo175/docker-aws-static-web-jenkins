@@ -1,152 +1,512 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Application Deployed Successfully</title>
+
+  <title>DevOps Deployment Dashboard</title>
+
   <style>
-    * { box-sizing: border-box; }
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 0;
+    }
+
+    body {
       font-family: Arial, Helvetica, sans-serif;
-      color: #fff;
+      min-height: 100vh;
+      color: #e8edf5;
       background:
-        radial-gradient(circle at 82% 20%, rgba(0, 173, 239, .28), transparent 35%),
-        linear-gradient(135deg, #172033 0%, #263652 50%, #08789f 100%);
+        radial-gradient(circle at 10% 10%, rgba(0, 180, 255, 0.12), transparent 30%),
+        radial-gradient(circle at 90% 90%, rgba(0, 255, 170, 0.08), transparent 30%),
+        linear-gradient(135deg, #0b1220, #111c30 50%, #0a1628);
+      padding: 40px 20px;
     }
-    .card {
-      width: min(680px, 92%);
-      padding: 42px 44px 34px;
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* HEADER */
+
+    .header {
       text-align: center;
-      border-radius: 18px;
-      background: rgba(39, 52, 79, .86);
-      box-shadow: 0 24px 70px rgba(0,0,0,.35);
-      backdrop-filter: blur(8px);
+      margin-bottom: 35px;
     }
-    .docker {
-      font-size: 58px;
+
+    .logo {
+      font-size: 48px;
       margin-bottom: 10px;
     }
-    h1 {
-      margin: 0;
-      font-size: 36px;
-      line-height: 1.15;
+
+    .header h1 {
+      font-size: 38px;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
     }
-    .subtitle {
-      margin: 18px auto 24px;
-      max-width: 560px;
-      color: #d9e1ec;
-      line-height: 1.55;
+
+    .header p {
+      color: #9daabd;
       font-size: 15px;
     }
+
     .status {
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 24px;
-      background: #19d85a;
-      color: #062d14;
-      font-weight: 700;
-      margin-bottom: 28px;
-      box-shadow: 0 8px 25px rgba(25,216,90,.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 9px 18px;
+      border-radius: 30px;
+      background: rgba(25, 216, 90, 0.12);
+      border: 1px solid rgba(25, 216, 90, 0.4);
+      color: #4df28a;
+      font-weight: 600;
+      font-size: 14px;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-bottom: 14px;
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      background: #35e875;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #35e875;
     }
-    .box {
-      min-height: 88px;
-      padding: 18px 10px;
-      border-radius: 13px;
-      background: rgba(117, 133, 162, .32);
+
+    /* MAIN CARD */
+
+    .card {
+      background: rgba(20, 31, 50, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 22px;
+    }
+
+    .section-subtitle {
+      color: #8795aa;
+      font-size: 13px;
+      margin-top: -15px;
+      margin-bottom: 25px;
+    }
+
+    /* PIPELINE */
+
+    .pipeline {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 15px 5px 20px;
+    }
+
+    .pipeline-step {
+      min-width: 115px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .pipeline-icon {
+      width: 58px;
+      height: 58px;
+      margin: auto;
+      display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 50%;
+      background: #182942;
+      border: 2px solid #20c997;
+      font-size: 25px;
+      box-shadow: 0 0 18px rgba(32, 201, 151, 0.12);
     }
-    .box strong { font-size: 16px; margin-bottom: 8px; }
-    .box span { color: #d8deea; font-size: 13px; }
-    .deployment {
-      width: calc((100% - 28px) / 3);
-      margin-bottom: 24px;
+
+    .pipeline-step strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 13px;
     }
+
+    .pipeline-step span {
+      display: block;
+      margin-top: 5px;
+      color: #8290a5;
+      font-size: 11px;
+    }
+
+    .arrow {
+      color: #20c997;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    /* TECHNOLOGIES */
+
+    .technologies {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .technology {
+      padding: 18px;
+      background: #142238;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .technology-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .technology strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .technology span {
+      display: block;
+      margin-top: 5px;
+      color: #8190a6;
+      font-size: 11px;
+    }
+
+    /* INFO */
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .info-box {
+      background: #142238;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .info-box span {
+      display: block;
+      color: #7e8da3;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .info-box strong {
+      font-size: 16px;
+    }
+
+    /* BUTTON */
+
+    .action {
+      text-align: center;
+      margin-top: 25px;
+    }
+
     button {
-      border: 0;
+      border: none;
       padding: 13px 28px;
       border-radius: 8px;
-      background: #19bff0;
-      color: #06233a;
+      background: #20c997;
+      color: #061a14;
       font-weight: 700;
       cursor: pointer;
       font-size: 14px;
+      transition: 0.2s;
     }
-    button:hover { filter: brightness(1.08); }
+
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
     #result {
-      min-height: 20px;
-      margin-top: 10px;
-      color: #a9f4c2;
+      margin-top: 12px;
+      color: #4df28a;
       font-size: 13px;
+      min-height: 20px;
     }
+
+    /* FOOTER */
+
     footer {
-      margin-top: 18px;
-      color: #b8c3d5;
+      text-align: center;
+      margin-top: 25px;
+      color: #68778e;
       font-size: 12px;
     }
-    @media (max-width: 600px) {
-      .card { padding: 30px 20px; }
-      h1 { font-size: 28px; }
-      .grid { grid-template-columns: 1fr; }
-      .deployment { width: 100%; }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 850px) {
+
+      .technologies {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pipeline {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 550px) {
+
+      body {
+        padding: 25px 12px;
+      }
+
+      .header h1 {
+        font-size: 28px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .technologies,
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
+
 <body>
-  <main class="card">
-    <div class="docker">🐳</div>
-    <h1>Application Deployed<br>Successfully</h1>
-    <p class="subtitle">
-      Your application is now live and running inside a Docker container.
-      Deployment completed successfully with high portability and cloud hosting.
-    </p>
 
-    <div class="status">✓ Docker Container Running</div>
+  <div class="container">
 
-    <section class="grid">
-      <div class="box">
-        <strong>Container</strong>
-        <span>Running</span>
+    <!-- HEADER -->
+
+    <header class="header">
+
+      <div class="logo">⚙️</div>
+
+      <h1>DevOps Deployment Dashboard</h1>
+
+      <p>
+        Automated CI/CD deployment powered by modern DevOps technologies
+      </p>
+
+      <div class="status">
+        <span class="status-dot"></span>
+        Production Deployment Successful
       </div>
-      <div class="box">
-        <strong>Environment</strong>
-        <span>Production</span>
+
+    </header>
+
+
+    <!-- CI/CD PIPELINE -->
+
+    <section class="card">
+
+      <h2 class="section-title">CI/CD Pipeline</h2>
+
+      <p class="section-subtitle">
+        Automated workflow from source code to production deployment
+      </p>
+
+      <div class="pipeline">
+
+        <div class="pipeline-step">
+          <div class="pipeline-icon">👨‍💻</div>
+          <strong>Developer</strong>
+          <span>Code Changes</span>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="pipeline-step">
+          <div class="pipeline-icon">🐙</div>
+          <strong>GitHub</strong>
+          <span>Source Code</span>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="pipeline-step">
+          <div class="pipeline-icon">🔨</div>
+          <strong>Jenkins</strong>
+          <span>CI Pipeline</span>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="pipeline-step">
+          <div class="pipeline-icon">🐳</div>
+          <strong>Docker</strong>
+          <span>Build & Test</span>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="pipeline-step">
+          <div class="pipeline-icon">📦</div>
+          <strong>Docker Hub</strong>
+          <span>Image Registry</span>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="pipeline-step">
+          <div class="pipeline-icon">☁️</div>
+          <strong>AWS EC2</strong>
+          <span>Deployment</span>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="pipeline-step">
+          <div class="pipeline-icon">🚀</div>
+          <strong>Production</strong>
+          <span>Live Application</span>
+        </div>
+
       </div>
-      <div class="box">
-        <strong>Uptime</strong>
-        <span>99.99%</span>
-      </div>
+
     </section>
 
-    <div class="box deployment">
-      <strong>Deployment</strong>
-      <span>Successful</span>
-    </div>
 
-    <button onclick="checkStatus()">Check Status</button>
-    <div id="result"></div>
+    <!-- TECHNOLOGIES -->
 
-    <footer>Powered by Docker • DevOps • AWS EC2</footer>
-  </main>
+    <section class="card">
+
+      <h2 class="section-title">Technology Stack</h2>
+
+      <p class="section-subtitle">
+        Technologies used to build, containerize and deploy this application
+      </p>
+
+      <div class="technologies">
+
+        <div class="technology">
+          <div class="technology-icon">🌐</div>
+          <strong>HTML5</strong>
+          <span>Frontend Structure</span>
+        </div>
+
+        <div class="technology">
+          <div class="technology-icon">🎨</div>
+          <strong>CSS3</strong>
+          <span>Responsive UI</span>
+        </div>
+
+        <div class="technology">
+          <div class="technology-icon">🐙</div>
+          <strong>GitHub</strong>
+          <span>Source Control</span>
+        </div>
+
+        <div class="technology">
+          <div class="technology-icon">🔧</div>
+          <strong>Jenkins</strong>
+          <span>CI/CD Automation</span>
+        </div>
+
+        <div class="technology">
+          <div class="technology-icon">🐳</div>
+          <strong>Docker</strong>
+          <span>Containerization</span>
+        </div>
+
+        <div class="technology">
+          <div class="technology-icon">📦</div>
+          <strong>Docker Hub</strong>
+          <span>Container Registry</span>
+        </div>
+
+        <div class="technology">
+          <div class="technology-icon">☁️</div>
+          <strong>AWS EC2</strong>
+          <span>Cloud Infrastructure</span>
+        </div>
+
+        <div class="technology">
+          <div class="technology-icon">🌐</div>
+          <strong>Nginx</strong>
+          <span>Web Server</span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DEPLOYMENT INFORMATION -->
+
+    <section class="card">
+
+      <h2 class="section-title">Deployment Information</h2>
+
+      <div class="info-grid">
+
+        <div class="info-box">
+          <span>Environment</span>
+          <strong>Production</strong>
+        </div>
+
+        <div class="info-box">
+          <span>Container Status</span>
+          <strong>Running</strong>
+        </div>
+
+        <div class="info-box">
+          <span>Deployment Method</span>
+          <strong>CI/CD Pipeline</strong>
+        </div>
+
+        <div class="info-box">
+          <span>Platform</span>
+          <strong>AWS EC2</strong>
+        </div>
+
+      </div>
+
+      <div class="action">
+
+        <button onclick="checkStatus()">
+          Check Application Status
+        </button>
+
+        <div id="result"></div>
+
+      </div>
+
+    </section>
+
+
+    <footer>
+      Built with HTML5 • CSS3 • Docker • Jenkins • GitHub • Docker Hub • AWS EC2 • Nginx
+    </footer>
+
+  </div>
+
 
   <script>
+
     function checkStatus() {
+
       document.getElementById("result").textContent =
-        "✓ Application is running successfully.";
+        "✓ Application is running successfully in the production container.";
+
     }
+
   </script>
+
 </body>
+
 </html>
